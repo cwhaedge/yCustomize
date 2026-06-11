@@ -25,10 +25,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class DyeStore {
 
+    // GSON must be initialized before INSTANCE: the constructor runs load(),
+    // which uses it. Static fields initialize in declaration order.
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
     private static final DyeStore INSTANCE = new DyeStore();
     public static DyeStore get() { return INSTANCE; }
-
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final Map<String, DyeEntry> entries = new ConcurrentHashMap<>();
     private final Map<String, SkinEntry> skins = new ConcurrentHashMap<>();
