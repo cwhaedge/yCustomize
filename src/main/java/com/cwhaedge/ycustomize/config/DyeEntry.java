@@ -1,4 +1,4 @@
-package com.example.dyebrush.config;
+package com.cwhaedge.ycustomize.config;
 
 /**
  * A single saved dye assignment for one armor piece (keyed by its Hypixel item UUID).

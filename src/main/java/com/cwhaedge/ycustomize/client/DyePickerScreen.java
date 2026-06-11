@@ -1,11 +1,11 @@
-package com.example.dyebrush.client;
+package com.cwhaedge.ycustomize.client;
 
-import com.example.dyebrush.config.DyeEntry;
-import com.example.dyebrush.config.DyeStore;
-import com.example.dyebrush.config.HypixelDyes;
-import com.example.dyebrush.config.SkinDatabase;
-import com.example.dyebrush.config.SkinEntry;
-import com.example.dyebrush.render.DyeRenderState;
+import com.cwhaedge.ycustomize.config.DyeEntry;
+import com.cwhaedge.ycustomize.config.DyeStore;
+import com.cwhaedge.ycustomize.config.HypixelDyes;
+import com.cwhaedge.ycustomize.config.SkinDatabase;
+import com.cwhaedge.ycustomize.config.SkinEntry;
+import com.cwhaedge.ycustomize.render.DyeRenderState;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -85,7 +85,7 @@ public class DyePickerScreen extends Screen {
     private int colX, colW, baseY;
 
     public DyePickerScreen(Screen parent, ItemStack[] currentArmor) {
-        super(Text.literal("DyeBrush"));
+        super(Text.literal("yCustomize"));
         this.parent = parent;
         if (currentArmor != null) {
             System.arraycopy(currentArmor, 0, this.armor, 0, Math.min(4, currentArmor.length));
@@ -417,7 +417,7 @@ public class DyePickerScreen extends Screen {
         if (stack == null || stack.isEmpty()) return;
         DyeStore.get().clear(stack);
         SkinEntry removedSkin = DyeStore.get().clearSkin(stack);
-        DyeBrushClient.restoreOriginalSkin(stack, removedSkin);
+        YCustomizeClient.restoreOriginalSkin(stack, removedSkin);
         DyeRenderState.clearPreview();
         status = Text.literal("Cleared ").append(stack.getName());
     }

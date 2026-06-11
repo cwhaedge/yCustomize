@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "dyebrush",
+  "id": "ycustomize",
   "version": "${version}",
-  "name": "DyeBrush",
+  "name": "yCustomize",
   "description": "Ultra-lightweight client-side armor dyeing for Hypixel SkyBlock. Hex, named Hypixel dyes, and animated dyes — nothing else.",
   "authors": [
     "cwhaedge"
@@ -12,15 +12,15 @@
     "sources": "https://github.com/cwhaedge/yCustomize"
   },
   "license": "MIT",
-  "icon": "assets/dyebrush/icon.png",
+  "icon": "assets/ycustomize/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.example.dyebrush.client.DyeBrushClient"
+      "com.cwhaedge.ycustomize.client.YCustomizeClient"
     ]
   },
   "mixins": [
-    "dyebrush.mixins.json"
+    "ycustomize.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.0",

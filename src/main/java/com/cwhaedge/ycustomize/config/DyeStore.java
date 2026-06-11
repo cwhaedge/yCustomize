@@ -1,4 +1,4 @@
-package com.example.dyebrush.config;
+package com.cwhaedge.ycustomize.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,7 +37,7 @@ public final class DyeStore {
     private DyeStore() {
         this.file = FabricLoader.getInstance()
                 .getConfigDir()
-                .resolve("dyebrush.json");
+                .resolve("ycustomize.json");
         load();
     }
 
@@ -144,7 +144,7 @@ public final class DyeStore {
                 }
             }
         } catch (Exception ex) {
-            System.err.println("[DyeBrush] Failed to load config: " + ex.getMessage());
+            System.err.println("[yCustomize] Failed to load config: " + ex.getMessage());
         }
     }
 
@@ -164,7 +164,7 @@ public final class DyeStore {
             Files.createDirectories(file.getParent());
             Files.writeString(file, GSON.toJson(root), StandardCharsets.UTF_8);
         } catch (IOException ex) {
-            System.err.println("[DyeBrush] Failed to save config: " + ex.getMessage());
+            System.err.println("[yCustomize] Failed to save config: " + ex.getMessage());
         }
     }
 }

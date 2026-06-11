@@ -1,4 +1,4 @@
-package com.example.dyebrush.config;
+package com.cwhaedge.ycustomize.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -75,15 +75,15 @@ public final class SkinDatabase {
     private static volatile String progress = "Downloading skin database…";
 
     private static Path cacheFile() {
-        return FabricLoader.getInstance().getConfigDir().resolve("dyebrush_skindb.json");
+        return FabricLoader.getInstance().getConfigDir().resolve("ycustomize_skindb.json");
     }
 
     private static Path dyeCacheFile() {
-        return FabricLoader.getInstance().getConfigDir().resolve("dyebrush_dyedb.json");
+        return FabricLoader.getInstance().getConfigDir().resolve("ycustomize_dyedb.json");
     }
 
     private static Path animSkinCacheFile() {
-        return FabricLoader.getInstance().getConfigDir().resolve("dyebrush_animskindb.json");
+        return FabricLoader.getInstance().getConfigDir().resolve("ycustomize_animskindb.json");
     }
 
     public static boolean isReady() { return ready; }
@@ -102,7 +102,7 @@ public final class SkinDatabase {
             if (ready || loading) return;
             loading = true;
         }
-        Thread t = new Thread(SkinDatabase::loadBlocking, "DyeBrush-SkinDB");
+        Thread t = new Thread(SkinDatabase::loadBlocking, "yCustomize-SkinDB");
         t.setDaemon(true);
         t.start();
     }
@@ -151,7 +151,7 @@ public final class SkinDatabase {
             } catch (Exception ex) {
                 // Cosmetics/dyes are a bonus — keep the Hypixel data if NEU is unreachable.
                 neuOk = false;
-                System.err.println("[DyeBrush] NEU repo fetch failed (cosmetic skins/dyes missing): " + ex);
+                System.err.println("[yCustomize] NEU repo fetch failed (cosmetic skins/dyes missing): " + ex);
             }
             // Only cache complete results — caching a partial fetch would freeze
             // the missing dyes/cosmetics in place forever; without a cache we
@@ -161,7 +161,7 @@ public final class SkinDatabase {
             ready = true;
         } catch (Exception ex) {
             error = ex.getMessage();
-            System.err.println("[DyeBrush] Skin database load failed: " + ex);
+            System.err.println("[yCustomize] Skin database load failed: " + ex);
         } finally {
             loading = false;
         }
@@ -185,7 +185,7 @@ public final class SkinDatabase {
             loadAnimSkinCache();
             return !SKINS.isEmpty();
         } catch (Exception ex) {
-            System.err.println("[DyeBrush] Skin DB cache unreadable, refetching: " + ex.getMessage());
+            System.err.println("[yCustomize] Skin DB cache unreadable, refetching: " + ex.getMessage());
             return false;
         }
     }
@@ -206,7 +206,7 @@ public final class SkinDatabase {
                 if (frames.length > 0) ANIM_SKINS.put(e.getKey(), new AnimatedSkin(frames, ticks));
             }
         } catch (Exception ex) {
-            System.err.println("[DyeBrush] Animated skin cache unreadable: " + ex.getMessage());
+            System.err.println("[yCustomize] Animated skin cache unreadable: " + ex.getMessage());
         }
     }
 
@@ -230,7 +230,7 @@ public final class SkinDatabase {
                 }
             }
         } catch (Exception ex) {
-            System.err.println("[DyeBrush] Dye DB cache unreadable: " + ex.getMessage());
+            System.err.println("[yCustomize] Dye DB cache unreadable: " + ex.getMessage());
         }
     }
 
@@ -268,7 +268,7 @@ public final class SkinDatabase {
             }
             Files.writeString(animSkinCacheFile(), anim.toString(), StandardCharsets.UTF_8);
         } catch (Exception ex) {
-            System.err.println("[DyeBrush] Failed to write skin DB cache: " + ex.getMessage());
+            System.err.println("[yCustomize] Failed to write skin DB cache: " + ex.getMessage());
         }
     }
 
@@ -279,7 +279,7 @@ public final class SkinDatabase {
                 .build();
         HttpRequest req = HttpRequest.newBuilder(URI.create(ITEMS_URL))
                 .timeout(Duration.ofSeconds(60))
-                .header("User-Agent", "DyeBrush/1.0")
+                .header("User-Agent", "yCustomize/1.21.11")
                 .GET()
                 .build();
         HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
@@ -314,7 +314,7 @@ public final class SkinDatabase {
                 .build();
         HttpRequest req = HttpRequest.newBuilder(URI.create(NEU_ZIP_URL))
                 .timeout(Duration.ofMinutes(5))
-                .header("User-Agent", "DyeBrush/1.0")
+                .header("User-Agent", "yCustomize/1.21.11")
                 .GET()
                 .build();
         HttpResponse<java.io.InputStream> resp =
@@ -368,7 +368,7 @@ public final class SkinDatabase {
                             }
                         }
                     } catch (Exception ex) {
-                        System.err.println("[DyeBrush] Couldn't parse NEU dyes.json: " + ex.getMessage());
+                        System.err.println("[yCustomize] Couldn't parse NEU dyes.json: " + ex.getMessage());
                     }
                     continue;
                 }
@@ -395,7 +395,7 @@ public final class SkinDatabase {
                             }
                         }
                     } catch (Exception ex) {
-                        System.err.println("[DyeBrush] Couldn't parse NEU animatedskulls.json: " + ex.getMessage());
+                        System.err.println("[yCustomize] Couldn't parse NEU animatedskulls.json: " + ex.getMessage());
                     }
                     continue;
                 }
@@ -473,7 +473,7 @@ public final class SkinDatabase {
             DYE_RAMPS.put(display, new HypixelDyes.DyeDef(stops, period));
         }
 
-        System.out.println("[DyeBrush] NEU repo merged: " + added + " cosmetic skins, "
+        System.out.println("[yCustomize] NEU repo merged: " + added + " cosmetic skins, "
                 + DYE_RAMPS.size() + " dyes (" + dyeAnimFrames.size() + " animated)");
     }
 

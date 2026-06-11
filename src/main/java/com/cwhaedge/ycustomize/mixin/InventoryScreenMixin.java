@@ -1,7 +1,7 @@
-package com.example.dyebrush.mixin;
+package com.cwhaedge.ycustomize.mixin;
 
-import com.example.dyebrush.client.DyeBrushClient;
-import com.example.dyebrush.client.DyePickerScreen;
+import com.cwhaedge.ycustomize.client.YCustomizeClient;
+import com.cwhaedge.ycustomize.client.DyePickerScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -37,7 +37,7 @@ public abstract class InventoryScreenMixin extends Screen {
         // Top-right corner of the character-preview window (box spans 26,8 → 75,78).
         this.addDrawableChild(ButtonWidget.builder(Text.literal("🖌"), btn -> openPicker())
                 .dimensions(x + 61, y + 9, 14, 14)
-                .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("DyeBrush")))
+                .tooltip(net.minecraft.client.gui.tooltip.Tooltip.of(Text.literal("yCustomize")))
                 .build());
     }
 
@@ -45,6 +45,6 @@ public abstract class InventoryScreenMixin extends Screen {
         MinecraftClient mc = MinecraftClient.getInstance();
         PlayerEntity p = mc.player;
         if (p == null) return;
-        mc.setScreen(new DyePickerScreen(this, DyeBrushClient.currentArmor(p)));
+        mc.setScreen(new DyePickerScreen(this, YCustomizeClient.currentArmor(p)));
     }
 }

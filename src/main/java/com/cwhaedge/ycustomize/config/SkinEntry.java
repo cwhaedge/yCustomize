@@ -1,4 +1,4 @@
-package com.example.dyebrush.config;
+package com.cwhaedge.ycustomize.config;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.gson.JsonElement;

@@ -1,60 +1,58 @@
-# DyeBrush
+# yCustomize
 
-An ultra-lightweight, client-side armor dyeing mod for Hypixel SkyBlock on
-**Minecraft 1.21.10 (Fabric)**. It does exactly one thing: let you recolor your
-armor with a hex color, a named Hypixel dye, or an animated/cycling dye — and
-nothing else. No HUDs, no solvers, no Kotlin, no telemetry.
+A lightweight, client-side armor customizer for Hypixel SkyBlock on
+**Minecraft 1.21.11 (Fabric)**. Recolor your armor with hex colors, real Hypixel
+dyes (including animated ones), or custom animated gradients — and reskin your
+helmet with any SkyBlock helmet skin, whether you own it or not. Everything is
+visual and client-side only; nothing is sent to the server.
 
-Total footprint: ~7 small source files. Depends only on Fabric Loader + Fabric API.
+## Features
 
-## What it does
+- **Per-item dyes** — hex color, any of the ~65 named Hypixel dyes (exact colors
+  and real animation sequences), or a custom animated gradient.
+- **Helmet skins** — search every SkyBlock skull item and cosmetic skin (sourced
+  from the Hypixel items API + the NEU community repo) and apply its look to the
+  helmet you're wearing. Animated skins (Panda Spirit, Celestial variants, …)
+  play their real frame sequences.
+- **Live preview** — your character renders in the picker and updates as you type
+  a hex code or browse dyes, before you hit Apply.
+- **Wardrobe-safe** — assignments are keyed to the item's Hypixel UUID, so they
+  follow the *piece* through the wardrobe, relogs, and inventory shuffles.
 
-- Adds a small 🖌 button to your inventory screen (and an optional keybind).
-- Opens a tiny picker: pick an armor slot, pick a mode (Hex / Named / Animated), apply.
-- Colors are **client-side only** — nobody else sees them.
-- Assignments are keyed to the item's Hypixel UUID, so they follow the *item*,
-  persist across relogs, and survive moving the piece around your inventory.
-- Saved to `config/dyebrush.json`.
+## Usage
 
-## Build it
+Open your inventory and click the 🖌 button on the character preview box, or bind
+a key under Controls → yCustomize. Pick a piece, pick a mode (Hex / Named Dye /
+Animated / Helmet Skin), apply. Clear removes everything from the selected piece.
 
-You need JDK 21 and internet access to Mojang/Fabric maven (the sandbox this was
-generated in can't reach those, so the jar is not pre-built).
+On first launch the mod downloads its item/dye/skin databases (~25 MB, one time)
+and caches them in `config/ycustomize_*.json`. Your assignments live in
+`config/ycustomize.json`.
+
+## Install
+
+Requires [Fabric Loader](https://fabricmc.net/) 0.17+ and
+[Fabric API](https://modrinth.com/mod/fabric-api) for 1.21.11, Java 21.
+Grab the jar from [Releases](https://github.com/cwhaedge/yCustomize/releases) and
+drop it in your `mods/` folder.
+
+## Build
 
 ```bash
-# from the project root
 ./gradlew build        # Linux/macOS
 gradlew.bat build      # Windows
 ```
 
-The finished mod jar lands in `build/libs/dyebrush-1.0.0.jar`. Drop it in your
-`mods/` folder alongside Fabric API.
+The jar lands in `build/libs/`.
 
-If you don't have the Gradle wrapper jar, run `gradle wrapper --gradle-version 8.10`
-once (requires a system Gradle), or open the folder in IntelliJ IDEA with the
-Minecraft Development plugin and let it import.
+## Notes
 
-## The two parts most likely to need tweaking
-
-1. **`HypixelDyes.java`** — Hypixel doesn't publish official hex values for custom
-   dyes, so the table holds community approximations. If a named dye looks off,
-   edit one number and rebuild. That's the whole reason it's a flat, explicit table.
-
-2. **`DyedColorComponentMixin.java`** — the render hook fires on Minecraft's
-   *dyeable* color path. That covers leather-base armor (most recolorable Hypixel
-   pieces). Truly non-dyeable armor models won't hit this path; recoloring those
-   would need a second hook on the armor feature renderer, which was intentionally
-   left out to keep the mod minimal. If you find a piece that won't take a color,
-   that's why.
-
-## Why not hook the actual vanilla brush?
-
-The brush button opens the vanilla equipment-customization view, but its class
-name shifts between versions and Hypixel sometimes routes customization through a
-server-side GUI. Anchoring our entry point to the stable `InventoryScreen` (same
-place the brush lives) is far less brittle and gives identical one-click access.
-If you specifically want to replace the brush screen itself, that mixin target is
-the one thing you'd swap in — everything else stays the same.
+- Dyes only recolor pieces vanilla treats as dyeable (leather-base armor — which
+  covers most recolorable SkyBlock pieces). Skull-based helmets take *skins*
+  instead; that's what Helmet Skin mode is for.
+- Dye colors/animations are read from NEU's `constants/dyes.json` at runtime, so
+  new dyes appear automatically. Animation speed is scaled by
+  `HypixelDyes.ANIMATION_SLOWDOWN` if it ever drifts from the real thing.
 
 ## License
 

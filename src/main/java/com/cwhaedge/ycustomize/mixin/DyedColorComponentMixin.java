@@ -1,6 +1,6 @@
-package com.example.dyebrush.mixin;
+package com.cwhaedge.ycustomize.mixin;
 
-import com.example.dyebrush.render.DyeRenderState;
+import com.cwhaedge.ycustomize.render.DyeRenderState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;

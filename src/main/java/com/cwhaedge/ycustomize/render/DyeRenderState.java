@@ -1,7 +1,7 @@
-package com.example.dyebrush.render;
+package com.cwhaedge.ycustomize.render;
 
-import com.example.dyebrush.config.DyeEntry;
-import com.example.dyebrush.config.DyeStore;
+import com.cwhaedge.ycustomize.config.DyeEntry;
+import com.cwhaedge.ycustomize.config.DyeStore;
 import net.minecraft.item.ItemStack;
 
 /**

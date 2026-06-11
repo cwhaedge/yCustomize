@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.example.dyebrush.mixin",
+  "package": "com.cwhaedge.ycustomize.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "DyedColorComponentMixin",

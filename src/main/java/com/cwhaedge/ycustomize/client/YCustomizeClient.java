@@ -1,7 +1,7 @@
-package com.example.dyebrush.client;
+package com.cwhaedge.ycustomize.client;
 
-import com.example.dyebrush.config.DyeStore;
-import com.example.dyebrush.config.SkinEntry;
+import com.cwhaedge.ycustomize.config.DyeStore;
+import com.cwhaedge.ycustomize.config.SkinEntry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -24,20 +24,22 @@ import org.lwjgl.glfw.GLFW;
  * constantly, so we re-assert the override every tick (a reference-equality check
  * makes the common case a no-op).
  */
-public class DyeBrushClient implements ClientModInitializer {
+public class YCustomizeClient implements ClientModInitializer {
 
     private static KeyBinding openKey;
 
     private static final KeyBinding.Category CATEGORY =
-            KeyBinding.Category.create(Identifier.of("dyebrush", "main"));
+            KeyBinding.Category.create(Identifier.of("ycustomize", "main"));
 
     @Override
     public void onInitializeClient() {
+        migrateOldConfigFiles();
+
         // Touch the store so config loads at startup (and surfaces errors early).
         DyeStore.get();
 
         openKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.dyebrush.open",
+                "key.ycustomize.open",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,           // default: unbound; user sets it in Controls
                 CATEGORY
@@ -49,6 +51,28 @@ public class DyeBrushClient implements ClientModInitializer {
             }
             applySkinOverrides(client);
         });
+    }
+
+    /** The mod used to be called DyeBrush — carry saved dyes/skins across the rename. */
+    private static void migrateOldConfigFiles() {
+        java.nio.file.Path cfg = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir();
+        String[][] renames = {
+                {"dyebrush.json", "ycustomize.json"},
+                {"dyebrush_skindb.json", "ycustomize_skindb.json"},
+                {"dyebrush_dyedb.json", "ycustomize_dyedb.json"},
+                {"dyebrush_animskindb.json", "ycustomize_animskindb.json"},
+        };
+        for (String[] r : renames) {
+            try {
+                java.nio.file.Path oldFile = cfg.resolve(r[0]);
+                java.nio.file.Path newFile = cfg.resolve(r[1]);
+                if (java.nio.file.Files.exists(oldFile) && !java.nio.file.Files.exists(newFile)) {
+                    java.nio.file.Files.move(oldFile, newFile);
+                }
+            } catch (Exception ex) {
+                System.err.println("[yCustomize] Config migration failed for " + r[0] + ": " + ex.getMessage());
+            }
+        }
     }
 
     private static void openPicker(MinecraftClient mc) {
