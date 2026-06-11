@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "dyebrush",
+  "version": "${version}",
+  "name": "DyeBrush",
+  "description": "Ultra-lightweight client-side armor dyeing for Hypixel SkyBlock. Hex, named Hypixel dyes, and animated dyes — nothing else.",
+  "authors": [
+    "you"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "assets/dyebrush/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.dyebrush.client.DyeBrushClient"
+    ]
+  },
+  "mixins": [
+    "dyebrush.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

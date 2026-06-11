@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.example.dyebrush.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "DyedColorComponentMixin",
+    "InventoryScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
