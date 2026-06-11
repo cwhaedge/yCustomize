@@ -5,11 +5,11 @@
   "name": "DyeBrush",
   "description": "Ultra-lightweight client-side armor dyeing for Hypixel SkyBlock. Hex, named Hypixel dyes, and animated dyes — nothing else.",
   "authors": [
-    "you"
+    "cwhaedge"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://github.com/cwhaedge/yCustomize",
+    "sources": "https://github.com/cwhaedge/yCustomize"
   },
   "license": "MIT",
   "icon": "assets/dyebrush/icon.png",
